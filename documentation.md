@@ -10,6 +10,18 @@
 
 	Set up the folder structure (src/controllers, src/models, src/routes, src/middleware).
 
+  	vector-interview-backend/
+	├── src/
+	│   ├── controllers/        # Route handlers
+	│   ├── models/             # Database models
+	│   ├── routes/             # API routes
+	│   ├── middleware/         # Custom middleware (e.g., auth)
+	│   └── server.js           # Entry point
+	├── .env                    # Environment variables
+	├── .gitignore              # Files to ignore in Git
+	├── package.json            # Project dependencies and scripts
+	└── README.md               # Project documentation
+
 ### Environment Configuration:
 
 	Created a .env file to store environment variables (PORT, MONGO_URI, JWT_SECRET).
