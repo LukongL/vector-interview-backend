@@ -1,25 +1,25 @@
-# vector-interview-backend Project
+## vector-interview-backend Project
 
-Overview
+### Overview
 Vector Interview is an asynchronous video interview platform designed to streamline the hiring process. This repository contains the backend implementation of the platform, built using Node.js (Express) and MongoDB.
 
-Features
+### Features
 
-User Authentication:
+**User Authentication**:
 
 	Signup and login with JWT-based authentication.
 
 	Password hashing using bcryptjs.
 
-Protected Routes:
+**Protected Routes**:
 
 	Example protected route to demonstrate authentication.
 
-Database Integration:
+**Database Integration**:
 
 	MongoDB Atlas for storing user and interview data.
 
-Technologies Used
+**Technologies Used**
 
 	Backend: Node.js, Express
 
@@ -33,9 +33,9 @@ Technologies Used
 
 	CORS Handling: cors
 
-Getting Started
+### Getting Started
 
-Prerequisites
+**Prerequisites**
 
 	Node.js (v16 or higher)
 
