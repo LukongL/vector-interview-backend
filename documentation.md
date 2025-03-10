@@ -1,6 +1,7 @@
-# Tasks Completed So Far
+## Tasks Completed So Far
 
-## Task 1
+
+# Task 1
 
 ### Project Setup:
 
