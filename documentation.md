@@ -65,7 +65,7 @@
 
 	Implemented password hashing using bcryptjs.
 
-	Created routes for user signup and login in src/routes/auth.js (/api/auth/signup, /api/auth/login).
+	**Created routes for user signup and login in src/routes/auth.js (/api/auth/signup, /api/auth/login)**.
 
 	Generated JWT tokens upon successful signup/login.
 
