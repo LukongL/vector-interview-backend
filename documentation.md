@@ -24,10 +24,10 @@
 
 ### Environment Configuration:
 
-	Created a .env file to store environment variables (PORT, MONGO_URI, JWT_SECRET).
+	Created a .env file to store environment variables (PORT, VECTOR_MONGO_URI, JWT_SECRET).
 		PORT=5000
-		MONGO_URI=mongodb+srv://<username>:<password>@cluster1.scljo.mongodb.net/vector-database?retryWrites=true&w=majority
-		JWT_SECRET=your_jwt_secret_key
+		VECTOR_MONGO_URI=mongodb+srv://<username>:<password>@cluster1.scljo.mongodb.net/vector-database?retryWrites=true&w=majority
+		JWT_SECRET=my_jwt_secret_key
 
 	Loaded environment variables using dotenv.
  		const dotenv = require('dotenv');
