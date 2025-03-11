@@ -82,3 +82,13 @@
 
 	Verified that the authentication system works as expected.
 
+### Deployment
+
+1. Deployment to Render
+   
+	The backend application is deployed on Render, a cloud platform for hosting web services.
+
+2. Testing the Live Backend
+   
+	Once deployed, tested on cURL the live backend using the provided Render URL.
+
