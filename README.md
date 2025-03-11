@@ -42,3 +42,7 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 	MongoDB Atlas account (or a local MongoDB instance)
 
 	cURL (for testing endpoints)
+
+ ### More Details
+
+ 	Review documentation.md for more details on tasks completed so far
