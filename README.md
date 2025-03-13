@@ -83,7 +83,8 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 
 ### API Documentation
 Access interactive documentation at http://localhost:5000/api-docs
-📄 Additional details in documentation.md
+
+📄 Additional details in [documentation.md] (https://github.com/LukongL/vector-interview-backend/blob/main/documentation.md)
 
 ### Testing Strategy
 	tests/
