@@ -1,48 +1,141 @@
-## vector-interview-backend Project
+# Vector Interview Backend
 
-### Overview
-Vector Interview is an asynchronous video interview platform designed to streamline the hiring process. This repository contains the backend implementation of the platform, built using Node.js (Express) and MongoDB.
+## Overview
+Vector Interview is an asynchronous video interview platform designed to streamline the hiring process. This Node.js/Express backend manages interviews with JWT authentication and MongoDB integration.
 
-### Features
+## Features
 
-**User Authentication**:
+### Core Features
+- **User Authentication**
+  - 🔐 Signup and login with JWT-based authentication
+  - 🔒 Password hashing using bcryptjs
+  - 🍪 HTTP-only cookies for secure token storage
 
-	Signup and login with JWT-based authentication.
+- **Interview Management**
+  - 📝 Create interviews with titles, descriptions, and questions
+  - ✅ Input validation with `express-validator`
+  - 🛡️ Protected routes with auth middleware
 
-	Password hashing using bcryptjs.
+- **Database Integration**
+  - 🗄️ MongoDB Atlas cloud database
+  - 📊 Mongoose schema validation
+  - 🧹 Automatic test database cleanup
 
-**Protected Routes**:
+### Security Features
+- ⚡ Rate limiting (100 requests/15 minutes)
+- 🔒 Security headers via Helmet
+- 🌐 CORS whitelisting
 
-	Example protected route to demonstrate authentication.
+## Technologies Used
 
-**Database Integration**:
+### Backend Stack
+- **Runtime**: Node.js
+- **Framework**: Express
+- **Database**: 
+  - MongoDB Atlas (production)
+  - MongoDB Memory Server (testing)
+- **Authentication**: JSON Web Tokens (JWT)
+- **Security**: 
+  - bcryptjs (password hashing)
+  - cors (CORS management)
+  - helmet (security headers)
 
-	MongoDB Atlas for storing user and interview data.
+### Development Tools
+- 📝 Swagger API documentation
+- 🧪 Jest + Supertest (testing)
+- 🔄 Nodemon (development server)
+- ⚙️ dotenv (environment management)
 
-**Technologies Used**
+## Getting Started
 
-	Backend: Node.js, Express
+### Prerequisites
+- Node.js v18+
+- npm v9+
+- MongoDB Atlas account **OR** Docker for local development
+- cURL/Postman for API testing
 
-	Database: MongoDB (via Mongoose)
+### Setup Guide
+1. Clone repo:
+```bash
+git clone https://github.com/yourusername/vector-interview-backend.git
+cd vector-interview-backend
 
-	Authentication: JSON Web Tokens (JWT)
+2. Install dependencies:
+npm install
 
-	Password Hashing: bcryptjs
+3. Create .env file:
 
-	Environment Management: dotenv
+	# Required
 
-	CORS Handling: cors
+	JWT_SECRET=your_jwt_secret_here
 
-### Getting Started
+	VECTOR_MONGO_URI=mongodb+srv://<user>:<password>@cluster.example.mongodb.net/dbname
 
-**Prerequisites**
+	CLIENT_URL=http://localhost:3000
+	
+	# Optional
 
-	Node.js (v16 or higher)
+	PORT=5000
 
-	MongoDB Atlas account (or a local MongoDB instance)
+4. Start server:
+npm run dev  # Development mode with hot-reload
+npm start    # Production mode
 
-	cURL (for testing endpoints)
+### API Documentation
+Access interactive documentation at http://localhost:5000/api-docs
+📄 Additional details in documentation.md
 
- ### More Details
+### Testing Strategy
+	tests/
+	├── auth.test.js         # Authentication tests
+	├── interview.test.js    # Interview CRUD tests
+	└── setup.js             # Test database configuration
 
- 	Review documentation.md for more details on tasks completed so far
+### Run tests:
+	npm test                 # Standard test run
+	npm test -- --verbose    # Detailed output
+
+	
+
+Best Practices
+
+	🧪 100% test coverage for auth and interview flows
+
+	🔄 CI/CD-ready test configuration
+	
+	🚨 Centralized error handling
+	
+	📊 Database indexing for query optimization
+	
+	📈 Request logging with Morgan
+
+### Support
+
+	Contact Maintainer
+	
+	📧 liliane.haniel@gmail.com
+	
+	🐛 Report Issues
+
+### Troubleshooting
+
+	Common Issues:
+	
+		EADDRINUSE: Stop processes on port 5000 or modify PORT
+		
+		MongoDB connection failures: Verify credentials in .env
+		
+		Test timeouts: Increase timeout in jest.config.js
+
+### Diagnostic Commands:
+
+	npm test -- --detectOpenHandles  # Identify resource leaks
+
+	npm run dev -- --trace-warnings  # Debug MongoDB warnings
+
+## License
+
+	MIT License
+
+
+
