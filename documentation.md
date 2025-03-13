@@ -184,7 +184,7 @@ Integrated swagger-jsdoc and swagger-ui-express.
 
 API documentation available at:
 
-👉 Swagger UI
+👉 [Swagger UI]((http://localhost:5000/api-docs)
 
 ## Updated Project Structure
 
