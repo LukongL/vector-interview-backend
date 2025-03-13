@@ -183,20 +183,34 @@ API documentation available at:
 
 👉 Swagger UI
 
-## Final Project Structure
+## Second Project Structure
+
 vector-interview-backend/
+
 ├── src/
+
 │   ├── controllers/       # Business logic
+
 │   ├── middleware/        # Auth, error handling, validators
+
 │   ├── models/            # MongoDB schemas
+
 │   ├── routes/            # Express routes
+
 │   ├── utils/             # Token generation
+
 │   └── server.js          # App entry point
+
 ├── tests/                 # Jest tests
+
 │   ├── auth.test.js
+
 │   ├── interview.test.js
+
 │   └── setup.js
+
 ├── .env                   # Environment variables
+
 └── package.json           # Scripts and dependencies
 
 ## Key Tools Used
