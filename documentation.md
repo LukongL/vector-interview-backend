@@ -186,7 +186,7 @@ API documentation available at:
 
 👉 Swagger UI
 
-## Second Project Structure
+## Updated Project Structure
 
 	vector-interview-backend/
 	├── src/
