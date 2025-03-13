@@ -127,7 +127,7 @@
 
 ### 3. Mounted Interview Routes & Tested API
 
-	Successfully tested POST /api/interviews using curl:
+	Successfully tested POST /api/interviews using curl (successfully added data to MongoDB Atlas database - interviews collection):
 	 curl -X POST http://localhost:5000/api/interviews \
 	-H "Content-Type: application/json" \
 	-H "Authorization: Bearer <JWT_TOKEN>" \
@@ -140,51 +140,53 @@
 	    ]
 	}'
 
+ ### 
+
  ## Error Handling & Security Improvements
 
 ### 1. Centralized Error Handling
 
-Created errorHandler.js to format all errors consistently.
-
-Controllers now pass errors to next() for cleaner code.
+	Created errorHandler.js to format all errors consistently.
+	
+	Controllers now pass errors to next() for cleaner code.
 
 #### 2. Input Validation
 
-Used express-validator to validate requests for /signup, /login, and interview creation.
+	Used express-validator to validate requests for /signup, /login, and interview creation.
 
 ### 3. Security Enhancements
 
-JWT in HTTP-Only Cookies (instead of response body).
-
-Rate Limiting via express-rate-limit to prevent brute-force attacks.
-
-Helmet Headers for secure HTTP headers.
+	JWT in HTTP-Only Cookies (instead of response body).
+	
+	Rate Limiting via express-rate-limit to prevent brute-force attacks.
+	
+	Helmet Headers for secure HTTP headers.
 
 ### 4. Logging
 
-Used morgan('dev') for HTTP request logging.
+	Used morgan('dev') for HTTP request logging.
 
 ## Testing
 
 ### 1. Jest + Supertest Integration
 
-Added unit tests for /signup, /login, and interview creation.
-
-Used mongodb-memory-server for isolated testing.
-
-	Test Suites: 2 passed, 2 total
-	Tests:       2 passed, 2 total
-	Time:        10.16 s
+	Added unit tests for /signup, /login, and interview creation.
+	
+	Used mongodb-memory-server for isolated testing.
+	
+		Test Suites: 2 passed, 2 total
+		Tests:       2 passed, 2 total
+		Time:        10.16 s
 
  ## API Documentation
  
- Swagger/OpenAPI Docs
-
-Integrated swagger-jsdoc and swagger-ui-express.
-
-API documentation available at:
-
-👉 [Swagger UI](http://localhost:5000/api-docs)
+	 Swagger/OpenAPI Docs
+	
+	Integrated swagger-jsdoc and swagger-ui-express.
+	
+	API documentation available at:
+	
+	👉 [Swagger UI](http://localhost:5000/api-docs)
 
 ## Updated Project Structure
 
