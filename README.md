@@ -82,7 +82,7 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 	npm start    # Production mode
 
 ### API Documentation
-Access interactive documentation at http://localhost:5000/api-docs
+Access interactive documentation at [Swagger ui](http://localhost:5000/api-docs)
 
 📄 Additional details in [documentation.md](https://github.com/LukongL/vector-interview-backend/blob/main/documentation.md)
 
@@ -96,18 +96,6 @@ Access interactive documentation at http://localhost:5000/api-docs
 	npm test                 # Standard test run
 	npm test -- --verbose    # Detailed output
 
-	
-### Best Practices
-
-	🧪 100% test coverage for auth and interview flows
-
-	🔄 CI/CD-ready test configuration
-	
-	🚨 Centralized error handling
-	
-	📊 Database indexing for query optimization
-	
-	📈 Request logging with Morgan
 
 ### Support
 
