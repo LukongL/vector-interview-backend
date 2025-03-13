@@ -205,9 +205,9 @@ API documentation available at:
 
 ## Key Tools Used
 
-✅ Security: helmet, express-rate-limit, cookie-parser
-✅ Validation: express-validator
-✅ Testing: jest, supertest, mongodb-memory-server
-✅ Docs: swagger-jsdoc, swagger-ui-express
-✅ Logging: morgan
+	✅ Security: helmet, express-rate-limit, cookie-parser
+	✅ Validation: express-validator
+	✅ Testing: jest, supertest, mongodb-memory-server
+	✅ Docs: swagger-jsdoc, swagger-ui-express
+	✅ Logging: morgan
 
