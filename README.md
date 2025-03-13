@@ -55,29 +55,29 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 - cURL/Postman for API testing
 
 ### Setup Guide
-	1. Clone repo:
+**1. Clone repo:**
 	```bash
 	git clone https://github.com/yourusername/vector-interview-backend.git
 	cd vector-interview-backend
-	
-	2. Install dependencies:
+
+**2. Install dependencies:**
 	npm install
+
+**3. Create .env file:**
+
+	# Required
+
+	JWT_SECRET=your_jwt_secret_here
+
+	VECTOR_MONGO_URI=mongodb+srv://<user>:<password>@cluster.example.mongodb.net/dbname
+
+	CLIENT_URL=http://localhost:3000
 	
-	3. Create .env file:
-	
-		# Required
-	
-		JWT_SECRET=your_jwt_secret_here
-	
-		VECTOR_MONGO_URI=mongodb+srv://<user>:<password>@cluster.example.mongodb.net/dbname
-	
-		CLIENT_URL=http://localhost:3000
-		
-		# Optional
-	
-		PORT=5000
-	
-	4. Start server:
+	# Optional
+
+	PORT=5000
+
+**4. Start server:**
 	npm run dev  # Development mode with hot-reload
 	npm start    # Production mode
 
