@@ -2,7 +2,6 @@
 
 ## Overview
 Vector Interview is an asynchronous video interview platform designed to streamline the hiring process. This Node.js/Express backend manages interviews with JWT authentication and MongoDB integration.
-<br>
 
 ## Features
 
@@ -26,6 +25,7 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 - ⚡ Rate limiting (100 requests/15 minutes)
 - 🔒 Security headers via Helmet
 - 🌐 CORS whitelisting
+<br><br>
 
 ## Technologies Used
 
@@ -46,6 +46,7 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 - 🧪 Jest + Supertest (testing)
 - 🔄 Nodemon (development server)
 - ⚙️ dotenv (environment management)
+<br><br>
 
 ## Getting Started
 
