@@ -2,9 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const authRoutes = require('./routes/auth');
-const auth = require('./middleware/auth'); // Import the auth middleware
-
+const interviewRoutes = require('./routes/interview');
+const errorHandler = require('./middleware/errorHandler');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 // Load environment variables
 dotenv.config();
@@ -12,33 +16,52 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Middleware
-app.use(cors());
+// Rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests
+});
+
+// Middleware (order matters!)
+app.use(helmet()); // Security headers first
+app.use(limiter); // Rate limiting early
+app.use(morgan('dev'));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
-//Connect to MongoDB
+// Connect to MongoDB only in non-test environments
+if (process.env.NODE_ENV !== 'test') {
 mongoose.connect(process.env.VECTOR_MONGO_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => {
-        console.error('MongoDB connection error:', err.message);
-        console.error('Full error:', err);
-        console.log('MONGO_URI:', process.env.VECTOR_MONGO_URI);
-    });
-
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err.message);
+    console.error('Check your environment variables.');
+  });
+}
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Vector Interview Backend is running!');
+  res.send('Vector Interview Backend is running!');
 });
 app.use('/api/auth', authRoutes);
+app.use('/api/interviews', interviewRoutes);
 
-// Protected Route
-//app.get('/api/protected', auth, (req, res) => {
-   // res.json({ message: 'This is a protected route', userId: req.userId });
-//});
+// Error handling (must be last!)
+app.use(errorHandler);
 
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+// Export the app (for testing)
+module.exports = app;
+
+// Start the server only if run directly (not imported)
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
+  });
+}
