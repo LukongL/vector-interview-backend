@@ -25,6 +25,7 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 - ⚡ Rate limiting (100 requests/15 minutes)
 - 🔒 Security headers via Helmet
 - 🌐 CORS whitelisting
+<br><br>
 
 ## Technologies Used
 
@@ -45,6 +46,7 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 - 🧪 Jest + Supertest (testing)
 - 🔄 Nodemon (development server)
 - ⚙️ dotenv (environment management)
+<br><br>
 
 ## Getting Started
 
@@ -55,35 +57,36 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 - cURL/Postman for API testing
 
 ### Setup Guide
-	1. Clone repo:
+**1. Clone repo:**
 	```bash
 	git clone https://github.com/yourusername/vector-interview-backend.git
 	cd vector-interview-backend
-	
-	2. Install dependencies:
+
+**2. Install dependencies:**
 	npm install
+
+**3. Create .env file:**
+
+	# Required
+
+	JWT_SECRET=your_jwt_secret_here
+
+	VECTOR_MONGO_URI=mongodb+srv://<user>:<password>@cluster.example.mongodb.net/dbname
+
+	CLIENT_URL=http://localhost:3000
 	
-	3. Create .env file:
-	
-		# Required
-	
-		JWT_SECRET=your_jwt_secret_here
-	
-		VECTOR_MONGO_URI=mongodb+srv://<user>:<password>@cluster.example.mongodb.net/dbname
-	
-		CLIENT_URL=http://localhost:3000
-		
-		# Optional
-	
-		PORT=5000
-	
-	4. Start server:
+	# Optional
+
+	PORT=5000
+
+**4. Start server:**
 	npm run dev  # Development mode with hot-reload
 	npm start    # Production mode
 
 ### API Documentation
-Access interactive documentation at http://localhost:5000/api-docs
-📄 Additional details in documentation.md
+Access interactive documentation at [Swagger ui](http://localhost:5000/api-docs)
+
+📄 Additional details in [documentation.md](https://github.com/LukongL/vector-interview-backend/blob/main/documentation.md)
 
 ### Testing Strategy
 	tests/
@@ -95,18 +98,6 @@ Access interactive documentation at http://localhost:5000/api-docs
 	npm test                 # Standard test run
 	npm test -- --verbose    # Detailed output
 
-	
-### Best Practices
-
-	🧪 100% test coverage for auth and interview flows
-
-	🔄 CI/CD-ready test configuration
-	
-	🚨 Centralized error handling
-	
-	📊 Database indexing for query optimization
-	
-	📈 Request logging with Morgan
 
 ### Support
 

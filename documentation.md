@@ -1,7 +1,7 @@
 ## Tasks Completed So Far
 
 
-# Task 1
+# Task 1 Project Setup & signup/Login 
 
 ### Project Setup:
 
@@ -84,120 +84,132 @@
 
 ### Deployment
 
-1. Deployment to Render
-   
-	The backend application is deployed on Render, a cloud platform for hosting web services.
-
-2. Testing the Live Backend
-   
-	Once deployed, tested on cURL the live backend using the provided Render URL.
-
-
-# Task 2
-
-1. Created the Interview Model in MongoDB using Mongoose
-
-	src/models/Interview.js:
+	1. Deployment to Render
+	   
+		The backend application is deployed on Render, a cloud platform for hosting web services.
 	
+	2. Testing the Live Backend
+	   
+		Once deployed, tested on cURL the live backend using the provided Render URL.
+
+
+---
+<br><br>
+
+
+# Task 2: Create Interview API
+
+## Features
+
+### 1. Created Interview Model
+
 	const mongoose = require('mongoose');
-	
 	const interviewSchema = new mongoose.Schema({
-	    title: { 
-	        type: String, 
-	        required: true,
-	        minlength: 5,
-	        maxlength: 100,
-	    },
-	    description: { 
-	        type: String, 
-	        maxlength: 500,
-	    },
-	    questions: [{ 
-	        type: String, 
-	        required: true,
-	        minlength: 5,
-	        maxlength: 200,
-	    }],
-	    createdBy: { 
-	        type: mongoose.Schema.Types.ObjectId, 
-	        ref: 'User', 
-	        required: true,
-	    },
-	    createdAt: { 
-	        type: Date, 
-	        default: Date.now,
-	    },
+	    title: { type: String, required: true, minlength: 5, maxlength: 100 },
+	    description: { type: String, maxlength: 500 },
+	    questions: [{ type: String, required: true, minlength: 5, maxlength: 200 }],
+	    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+	    createdAt: { type: Date, default: Date.now }
 	});
-	
 	module.exports = mongoose.model('Interview', interviewSchema);
+ 
+ ### 2. Created Interview Routes
+	const express = require('express');
+	const router = express.Router();
+	const auth = require('../middleware/auth');
+	const interviewController = require('../controllers/interviewController');
+	const { validateInterview } = require('../middleware/validators');
+	
+	// Create an interview
+	router.post('/', auth, validateInterview, interviewController.createInterview);
+	
+	module.exports = router;
 
+### 3. Mounted Interview Routes & Tested API
 
-3. Created the Interview Routes
-   Started with creating endpoints
+	Successfully tested POST /api/interviews using curl (successfully added data to MongoDB Atlas database - interviews collection):
+	 curl -X POST http://localhost:5000/api/interviews \
+	-H "Content-Type: application/json" \
+	-H "Authorization: Bearer <JWT_TOKEN>" \
+	-d '{
+	    "title": "Software Engineer Interview",
+	    "description": "Technical interview for software engineering role",
+	    "questions": [
+	        "What is your experience with Node.js?",
+	        "Explain REST APIs."
+	    ]
+	}'
 
+ ### 
 
-Create a new file src/routes/interview.js:
-1. Error Handling
-Centralized Error Middleware:
-Created errorHandler.js to catch and format all errors consistently.
-Controllers now pass errors to next() instead of sending responses directly.
-Result: Cleaner code, standardized error responses, and easier debugging.
+ ## Error Handling & Security Improvements
 
-2. Input Validation
-Structured Validation with express-validator:
-Added validation rules for /signup, /login, and interview creation in validators.js.
-Controllers check validation results before processing requests.
-Result: Safer inputs, reduced manual checks, and detailed error messages.
+### 1. Centralized Error Handling
 
-3. Security Improvements
-JWT in HTTP-Only Cookies:
-Tokens are stored in secure, HTTP-only cookies (instead of response bodies).
-Added cookie-parser middleware.
-Rate Limiting:
-Added express-rate-limit to prevent brute-force attacks.
-Helmet Headers:
-Enabled secure HTTP headers via helmet().
-Result: Reduced risk of XSS, CSRF, and brute-force attacks.
+	Created errorHandler.js to format all errors consistently.
+	
+	Controllers now pass errors to next() for cleaner code.
 
-4. Logging
-HTTP Request Logging with morgan:
-Added morgan('dev') to log requests (e.g., GET /api/interviews 200 15ms).
-Result: Better monitoring and debugging of API activity.
+#### 2. Input Validation
 
-5. Testing
-Jest + Supertest Integration:
-Added unit tests for /signup, /login, and interview creation.
-Used mongodb-memory-server for isolated testing.
-Result: Reliable tests to catch regressions and edge cases.
+	Used express-validator to validate requests for /signup, /login, and interview creation.
 
-6. API Documentation
-Swagger/OpenAPI Docs:
-Added swagger-jsdoc and swagger-ui-express.
-Documented endpoints with JSDoc comments.
-Result: Interactive API docs at http://localhost:5000/api-docs.
+### 3. Security Enhancements
 
-7. Project Structure
-vector-interview-backend/
-├── src/
-│   ├── controllers/       # Business logic (authController, interviewController)
-│   ├── middleware/        # Auth, error handling, validators
-│   ├── models/            # MongoDB schemas (User, Interview)
-│   ├── routes/            # Express routes (auth, interview)
-│   ├── utils/             # Token generation (auth.js)
-│   └── server.js          # App entry point
-├── tests/                 # Jest tests
-│   ├── auth.test.js
-│   ├── interview.test.js
-│   └── setup.js
-├── .env                   # Environment variables
-└── package.json           # Updated scripts and dependencies
+	JWT in HTTP-Only Cookies (instead of response body).
+	
+	Rate Limiting via express-rate-limit to prevent brute-force attacks.
+	
+	Helmet Headers for secure HTTP headers.
 
+### 4. Logging
 
-Key Tools Added
-Security: helmet, express-rate-limit, cookie-parser.
-Validation: express-validator.
-Testing: jest, supertest, mongodb-memory-server.
-Docs: swagger-jsdoc, swagger-ui-express.
-Logging: morgan.
+	Used morgan('dev') for HTTP request logging.
 
+## Testing
+
+### 1. Jest + Supertest Integration
+
+	Added unit tests for /signup, /login, and interview creation.
+	
+	Used mongodb-memory-server for isolated testing.
+	
+		Test Suites: 2 passed, 2 total
+		Tests:       2 passed, 2 total
+		Time:        10.16 s
+
+ ## API Documentation
+ 
+	 Swagger/OpenAPI Docs
+	
+	Integrated swagger-jsdoc and swagger-ui-express.
+	
+	API documentation available at:
+	
+	👉 [Swagger UI](http://localhost:5000/api-docs)
+
+## Updated Project Structure
+
+	vector-interview-backend/
+	├── src/
+	│   ├── controllers/       # Business logic
+	│   ├── middleware/        # Auth, error handling, validators
+	│   ├── models/            # MongoDB schemas
+	│   ├── routes/            # Express routes
+	│   ├── utils/             # Token generation
+	│   └── server.js          # App entry point
+	├── tests/                 # Jest tests
+	│   ├── auth.test.js
+	│   ├── interview.test.js
+	│   └── setup.js
+	├── .env                   # Environment variables
+	└── package.json           # Scripts and dependencies
+
+## Key Tools Used
+
+	✅ Security: helmet, express-rate-limit, cookie-parser
+	✅ Validation: express-validator
+	✅ Testing: jest, supertest, mongodb-memory-server
+	✅ Docs: swagger-jsdoc, swagger-ui-express
+	✅ Logging: morgan
 
