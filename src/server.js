@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const authRoutes = require('./routes/auth');
 const interviewRoutes = require('./routes/interview');
 const errorHandler = require('./middleware/errorHandler');
@@ -15,6 +17,36 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
+
+// Swagger configuration
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Vector Interview API',
+      version: '1.0.0',
+      description: 'API documentation for Vector Interview Backend',
+    },
+    servers: [
+      {
+        url: `http://localhost:${process.env.PORT || 5000}`,
+        description: 'Development server',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        cookieAuth: {
+          type: 'apiKey',
+          in: 'cookie',
+          name: 'token',
+        },
+      },
+    },
+  },
+  apis: ['./routes/*.js'], // Path to route files
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Rate limiter
 const limiter = rateLimit({
@@ -35,14 +67,17 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// Swagger documentation route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Connect to MongoDB only in non-test environments
 if (process.env.NODE_ENV !== 'test') {
-mongoose.connect(process.env.VECTOR_MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => {
-    console.error('MongoDB connection error:', err.message);
-    console.error('Check your environment variables.');
-  });
+  mongoose.connect(process.env.VECTOR_MONGO_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => {
+      console.error('MongoDB connection error:', err.message);
+      console.error('Check your environment variables.');
+    });
 }
 
 // Routes
@@ -63,5 +98,6 @@ if (require.main === module) {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    console.log(`API docs: http://localhost:${PORT}/api-docs`);
   });
 }
