@@ -330,4 +330,23 @@
 	Response schema examples
 	Access updated docs at:
 	👉 Swagger UI
+ <img width="960" alt="swagger ui" src="https://github.com/user-attachments/assets/645f9c6b-359a-4c45-84a5-8af8ef619c0b" />
+
+
+
+
+ ### Deployment on Render
+	 ==> Deploying...
+	==> Running 'node src/server.js'
+	Server is running on port 5000
+	API docs: http://localhost:5000/api-docs
+	MongoDB connected
+	==> Deploying...
+	==> Running 'node src/server.js'
+	Server is running on port 5000
+	API docs: http://localhost:5000/api-docs
+	HEAD / 200 4.239 ms - 36
+	MongoDB connected
+	==> Your service is live 🎉
+	GET / 200 0.701 ms - 36
 
