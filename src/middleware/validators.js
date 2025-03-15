@@ -1,5 +1,4 @@
-// src/middleware/validators.js
-const { body, validationResult } = require('express-validator');
+const { body, query } = require('express-validator');
 
 // Validation rules for signup
 exports.validateSignup = [

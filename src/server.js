@@ -54,6 +54,9 @@ const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests
 });
 
+// Trust first proxy (Render uses proxies)
+app.set('trust proxy', 1); 
+
 // Middleware (order matters!)
 app.use(helmet()); // Security headers first
 app.use(limiter); // Rate limiting early
