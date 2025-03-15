@@ -336,17 +336,6 @@
 
 
  ### Deployment on Render
-	 ==> Deploying...
-	==> Running 'node src/server.js'
-	Server is running on port 5000
-	API docs: http://localhost:5000/api-docs
-	MongoDB connected
-	==> Deploying...
-	==> Running 'node src/server.js'
-	Server is running on port 5000
-	API docs: http://localhost:5000/api-docs
-	HEAD / 200 4.239 ms - 36
-	MongoDB connected
-	==> Your service is live 🎉
-	GET / 200 0.701 ms - 36
+<img width="662" alt="Render deployed" src="https://github.com/user-attachments/assets/36b9bb71-3f0f-4d19-a460-9a2cbb5e8b65" />
+
 
