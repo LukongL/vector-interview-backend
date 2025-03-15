@@ -80,7 +80,9 @@ Vector Interview is an asynchronous video interview platform designed to streaml
 	PORT=5000
 
 **4. Start server:**
+
 	npm run dev  # Development mode with hot-reload
+ 
 	npm start    # Production mode
 
 ### API Documentation
