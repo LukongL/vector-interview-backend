@@ -38,4 +38,70 @@ describe('Interview Routes', () => {
 
     expect(res.statusCode).toBe(201);
   }, 10000);
+
+  it('should retrieve all interviews', async () => {
+    const res = await request(app)
+      .get('/api/interviews')
+      .set('Cookie', authCookie);
+    expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+  
+  it('should retrieve a single interview', async () => {
+    const createRes = await request(app)
+      .post('/api/interviews')
+      .set('Cookie', authCookie)
+      .send({
+        title: 'Test Interview',
+        questions: ['What is Node.js?']
+      });
+    
+    const interviewId = createRes.body._id;
+    const res = await request(app)
+      .get(`/api/interviews/${interviewId}`)
+      .set('Cookie', authCookie);
+    
+    expect(res.statusCode).toBe(200);
+    expect(res.body.title).toBe('Test Interview');
+  });
+  
+  /*
+  it('should update an interview', async () => {
+    const createRes = await request(app)
+      .post('/api/interviews')
+      .set('Cookie', authCookie)
+      .send({
+        title: 'Old Title',
+        questions: ['Old question']
+      });
+    
+    const updatedRes = await request(app)
+      .put(`/api/interviews/${createRes.body._id}`)
+      .set('Cookie', authCookie)
+      .send({
+        title: 'New Title',
+        questions: ['Updated question']
+      });
+    
+    expect(updatedRes.statusCode).toBe(200);
+    expect(updatedRes.body.title).toBe('New Title');
+  });
+  
+  it('should delete an interview', async () => {
+    const createRes = await request(app)
+      .post('/api/interviews')
+      .set('Cookie', authCookie)
+      .send({
+        title: 'To Delete',
+        questions: ['Delete me']
+      });
+    
+    const deleteRes = await request(app)
+      .delete(`/api/interviews/${createRes.body._id}`)
+      .set('Cookie', authCookie);
+    
+    expect(deleteRes.statusCode).toBe(200);
+    expect(deleteRes.body.message).toContain('deleted');
+  });
+  */
 });
