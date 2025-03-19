@@ -212,3 +212,130 @@
 	✅ Testing: jest, supertest, mongodb-memory-server
 	✅ Docs: swagger-jsdoc, swagger-ui-express
 	✅ Logging: morgan
+---
+<br><br>
+ # Task 3: Interview Fetching & Pagination
+
+## Features Implemented
+
+### 1. Interview Fetching Endpoints
+- **GET /api/interviews** - Get paginated list of interviews
+- **GET /api/interviews/{id}** - Get single interview by ID
+
+### 2. Pagination System
+- Page number and limit parameters
+- Response metadata (total interviews, pages, etc.)
+- Input validation for pagination parameters
+
+### 3. Security Enhancements
+- Ownership checking for interview access
+- MongoDB ID format validation
+
+## Files Updated/Added
+
+### 1. interviewController.js
+	const getInterviews = async (req, res, next) => {
+	  try {
+	    // Get pagination parameters from validated request
+	    const page = parseInt(req.query.page) || 1;
+	    const limit = parseInt(req.query.limit) || 10;
+	    const skip = (page - 1) * limit;
+	
+	    // Execute parallel queries for data and count
+	    const [interviews, total] = await Promise.all([
+	      Interview.find({ createdBy: req.userId })
+	        .select('-__v')
+	        .sort({ createdAt: -1 }) // Newest first
+	        .skip(skip)
+	        .limit(limit),
+	      
+	      Interview.countDocuments({ createdBy: req.userId })
+	    ]);
+	
+	    res.json({
+	      totalInterviews: total,
+	      totalPages: Math.ceil(total / limit),
+	      currentPage: page,
+	      interviewsPerPage: limit,
+	      interviews
+	    });
+	  } catch (err) {
+	    next(err);
+	  }
+	};
+	
+	const getInterview = async (req, res, next) => {
+	  try {
+	    // Validate MongoDB ID format first
+	    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+	      const error = new Error('Invalid interview ID format');
+	      error.statusCode = 400;
+	      throw error;
+	    }
+	
+	    const interview = await Interview.findOne({ 
+	      _id: req.params.id, 
+	      createdBy: req.userId 
+	    }).select('-__v');
+	
+	    if (!interview) {
+	      const error = new Error('Interview not found');
+	      error.statusCode = 404;
+	      throw error;
+	    }
+	    res.json(interview);
+	  } catch (err) {
+	    next(err);
+	  }
+	};
+
+### 2. routes/interview.js
+	// Updated routes:
+	router.get('/', auth, validatePagination, getInterviews);
+	router.get('/:id', auth, getInterview);
+
+### 3. middleware/validators.js
+	// Added pagination validation:
+	exports.validatePagination = [
+	query('page').optional().isInt({ min: 1 }),
+	query('limit').optional().isInt({ min: 1, max: 100 })
+	];
+
+## Testing
+**Testing APIs**
+
+	1. Clear old cookies
+	rm cookies.txt
+
+	2. Login with proper cookie handling
+	curl -X POST http://localhost:5000/api/auth/login \
+	-H "Content-Type: application/json" \
+	--cookie-jar cookies.txt \
+	-d '{"email":"test@example.com","password":"password123"}'
+
+	3. Get interviews with cookies
+	curl --cookie cookies.txt http://localhost:5000/api/interviews
+
+**Testing Documentation**
+
+	Get Paginated Interviews
+	curl --cookie cookies.txt "http://localhost:5000/api/interviews?page=2&limit=5"
+	Get Single Interview
+	curl --cookie cookies.txt http://localhost:5000/api/interviews/65f31a1d9c9d4a3f4c7e7c7a
+
+### API Documentation Updates
+	Swagger UI now includes:
+	Pagination parameters documentation
+	New GET endpoints documentation
+	Response schema examples
+	Access updated docs at:
+	👉 Swagger UI
+ <img width="960" alt="swagger ui" src="https://github.com/user-attachments/assets/645f9c6b-359a-4c45-84a5-8af8ef619c0b" />
+
+
+
+
+ ### Deployment on Render
+<img width="662" alt="Render deployed" src="https://github.com/user-attachments/assets/36b9bb71-3f0f-4d19-a460-9a2cbb5e8b65" />
+
+
