@@ -337,5 +337,124 @@
 
  ### Deployment on Render
 <img width="662" alt="Render deployed" src="https://github.com/user-attachments/assets/36b9bb71-3f0f-4d19-a460-9a2cbb5e8b65" />
+---
+<br><br>
 
+
+# Task 4: Video Upload & Management
+
+## Features Implemented
+
+### Video Upload System
+- **Cloudinary Integration**
+  - 🎥 Secure video file storage
+  - 🔗 Automatic URL generation
+  - ⏱ Duration extraction (seconds)
+  
+### Database Management
+  - 💾 Stores video metadata in MongoDB:
+    ```json
+    {
+      "video": {
+        "public_id": "interview-videos/abc123",
+        "url": "https://res.cloudinary.com/.../video.mp4",
+        "duration": 120
+      }
+    }
+    ```
+
+### Validation & Security
+- ✅ File type validation (MP4, MOV, AVI)
+- 📏 Size limit: 50MB
+- 🔒 Owner-only access control
+- 🔑 JWT authentication required
+
+---
+
+## Implementation Details
+
+### Files Added/Modified
+1. **middleware/upload.js**
+   ```javascript
+   const upload = multer({
+     storage: multer.memoryStorage(),
+     limits: { fileSize: 50 * 1024 * 1024 }, // 50MB
+     fileFilter: (req, file, cb) => {
+       if (file.mimetype.startsWith('video/')) cb(null, true)
+       else cb(new Error('Invalid file type'), false)
+     }
+   });
+
+2. **models/Interview.js (Schema Update)**
+	video: {
+	  public_id: String,
+	  url: String,
+	  duration: Number
+	}
+
+4. **controllers/videoController.js**
+	const result = await cloudinary.uploader.upload(req.file.buffer, {
+	  resource_type: "video",
+	  folder: "interview-videos"
+	});
+
+5. **routes/interview.js**
+   	router.put('/:id/video', auth, upload.single('video'), uploadVideo);
+
+6. config/cloudinary.js
+	cloudinary.config({
+	  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	  api_key: process.env.CLOUDINARY_API_KEY,
+	  api_secret: process.env.CLOUDINARY_API_SECRET
+	});
+### Testing Documentation
+	$ curl -X PUT http://localhost:5000/api/interviews/67d40f0609df34817caef235/video \
+	  -b cookies.txt \
+	  -H "Content-Type: multipart/form-data" \
+	  -F "video=@./tests/videos/video1.mp4;type=video/mp4"
+	{"message":"Video uploaded successfully","video":{"public_id":"interview-videos/ubd5vnutnmd0a9yzbwlj","url":"https://res.cloudinary.com/dm9dj05if/video/upload/v1742383504/interview-videos/ubd5vnutnmd0a9yzbwlj.mp4","duration":10}}
+
+ <img width="960" alt="cloudinary-video1" src="https://github.com/user-attachments/assets/692bb917-2ed7-4306-91d7-7e87cc60b3e2" />
+
+ ### Updated Project Structure
+	 vector-interview-backend/
+	├── config/
+	│   └── cloudinary.js       # Cloudinary configuration
+	├── middleware/
+	│   └── upload.js           # File upload handling
+	└── controllers/
+	    └── videoController.js  # Video upload logic
+
+### API Documentation Update
+	Swagger Endpoint:
+	PUT /api/interviews/{id}/video
+
+### Security Considerations
+	Authentication
+	
+		HTTP-only cookies for JWT
+	
+		Owner verification before upload
+	
+	Cloudinary Security
+	
+		Secure URLs (HTTPS)
+	
+		Private folder structure
+	
+		API key rotation
+	
+	Validation
+	
+		File type whitelisting
+	
+		Server-side size validation
+	
+		MIME type verification
+	
+	Rate Limiting
+	
+		100 requests/15 minutes
+	
+		Separate limit for video endpoints
 
