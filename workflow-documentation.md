@@ -142,7 +142,6 @@
 	    ]
 	}'
 
- ### 
 
  ## Error Handling & Security Improvements
 
@@ -332,13 +331,12 @@
 	Response schema examples
 	Access updated docs at:
 	👉 Swagger UI
- <img width="960" alt="swagger ui" src="https://github.com/user-attachments/assets/645f9c6b-359a-4c45-84a5-8af8ef619c0b" />
-
-
+ <img width="960" alt="swagger ui" src="https://github.com/user-attachments/assets/4202718b-7974-4928-907f-6d59cc0cd2f1" />
 
 
  ### Deployment on Render
-<img width="662" alt="Render deployed" src="https://github.com/user-attachments/assets/36b9bb71-3f0f-4d19-a460-9a2cbb5e8b65" />
+<img width="662" alt="Render deployed" src="https://github.com/user-attachments/assets/79c1671a-1ef4-43f3-83c4-eaedd82f55d4" />
+
 ---
 <br><br>
 
