@@ -1,5 +1,6 @@
 const Interview = require('../models/Interview');
 const { uploadToCloudinary } = require('../middleware/upload');
+const { cloudinary } = require('../config/cloudinary');
 
 const uploadVideo = async (req, res, next) => {
   try {
@@ -36,6 +37,13 @@ const uploadVideo = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+
+  console.log('Cloudinary Config:', {
+    cloud: cloudinary.config().cloud_name,
+    apiKey: cloudinary.config().api_key ? '***' : 'MISSING'
+  });
 };
+
+
 
 module.exports = { uploadVideo };
