@@ -5,6 +5,8 @@ const auth = require('../middleware/auth');
 const interviewController = require('../controllers/interviewController');
 const { validateInterview } = require('../middleware/validators');
 const { validatePagination } = require('../middleware/validators');
+const { uploadVideo } = require('../controllers/videoController');
+const { upload } = require('../middleware/upload');
 
 /**
  * @swagger
@@ -134,6 +136,44 @@ router.get(
  */
 
 router.get('/:id', auth, interviewController.getInterview);
+
+/**
+ * @swagger
+ * /api/interviews/{id}/video:
+ *   put:
+ *     summary: Upload video for an interview
+ *     tags: [Interviews]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               video:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Video uploaded successfully
+ *       400:
+ *         description: Invalid file type or size
+ *       404:
+ *         description: Interview not found
+ */
+router.put(
+    '/:id/video',
+    auth,
+    upload.single('video'),
+    uploadVideo
+  );
 
 module.exports = router;
 

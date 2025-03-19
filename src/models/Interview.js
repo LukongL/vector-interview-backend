@@ -26,6 +26,11 @@ const interviewSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now,
     },
+    video: {
+        public_id: String,
+        url: String,
+        duration: Number  // Duration in seconds
+    },
 });
 
 module.exports = mongoose.model('Interview', interviewSchema);
