@@ -389,26 +389,25 @@
 	   });
 
 2. **models/Interview.js (Schema Update)**
-   
+
 	video: {
 	  public_id: String,
 	  url: String,
 	  duration: Number
 	}
-
 3. **controllers/videoController.js**
-   
+
 	const result = await cloudinary.uploader.upload(req.file.buffer, {
 	  resource_type: "video",
 	  folder: "interview-videos"
 	});
 
 4. **routes/interview.js**
-   
-   	router.put('/:id/video', auth, upload.single('video'), uploadVideo);
+
+	router.put('/:id/video', auth, upload.single('video'), uploadVideo);
 
 5. **config/cloudinary.js**
-   
+
 	cloudinary.config({
 	  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	  api_key: process.env.CLOUDINARY_API_KEY,
