@@ -225,13 +225,13 @@
 - **GET /api/interviews/{id}** - Get single interview by ID
 
 ### 2. Pagination System
-- Page number and limit parameters
-- Response metadata (total interviews, pages, etc.)
-- Input validation for pagination parameters
+	- Page number and limit parameters
+	- Response metadata (total interviews, pages, etc.)
+	- Input validation for pagination parameters
 
 ### 3. Security Enhancements
-- Ownership checking for interview access
-- MongoDB ID format validation
+	- Ownership checking for interview access
+	- MongoDB ID format validation
 
 ## Files Updated/Added
 
