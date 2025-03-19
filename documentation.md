@@ -87,7 +87,7 @@
 	1. Deployment to Render
 	   
 		The backend application is deployed on Render, a cloud platform for hosting web services.
-  		[vector-interview-backend](https://vector-interview-backend.onrender.com/)
+  		[vector-interview-backend](https://vector-interview-backend.onrender.com)
 	
 	2. Testing the Live Backend
 	   
