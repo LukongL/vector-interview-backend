@@ -487,7 +487,7 @@
 }
 ```
 
-## API Documentation
+## 3. API Documentation
 
 ### Submit Evaluation
 
@@ -527,7 +527,7 @@ POST /api/interviews/{interviewId}/evaluations
 }
 ```
 
-## Testing Guide
+## 4. Testing Guide
 
 ### 1. Prerequisites
 - Valid authentication cookie (`cookies.txt`)
@@ -561,7 +561,7 @@ curl -X POST http://localhost:5000/api/interviews/67d40f0609df34817caef235/evalu
 
 ---
 
-## Updated Project Structure
+## 5. Updated Project Structure
 ```
 src/
 ├── models/
@@ -577,7 +577,7 @@ src/
 
 ---
 
-## Changelog (Task 5)
+## 6. Changelog (Task 5)
 
 ### New Features
 - Evaluation submission endpoint
@@ -591,7 +591,7 @@ src/
 
 ---
 
-## Implementation Details
+## 7. Implementation Details
 
 ### 1. Evaluation Routes (`src/routes/evaluation.js`)
 ```javascript
