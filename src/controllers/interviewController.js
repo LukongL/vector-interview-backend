@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Interview = require('../models/Interview');
 
 const createInterview = async (req, res, next) => {
@@ -57,7 +58,7 @@ const getInterviews = async (req, res, next) => {
 
 const getInterview = async (req, res, next) => {
   try {
-    // Validate MongoDB ID format first
+    // Validate MongoDB ID format
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       const error = new Error('Invalid interview ID format');
       error.statusCode = 400;
@@ -67,13 +68,14 @@ const getInterview = async (req, res, next) => {
     const interview = await Interview.findOne({ 
       _id: req.params.id, 
       createdBy: req.userId 
-    }).select('-__v');
+    });
 
     if (!interview) {
       const error = new Error('Interview not found');
       error.statusCode = 404;
       throw error;
     }
+    
     res.json(interview);
   } catch (err) {
     next(err);

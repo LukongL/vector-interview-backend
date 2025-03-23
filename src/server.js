@@ -11,6 +11,7 @@ const interviewRoutes = require('./routes/interview');
 const errorHandler = require('./middleware/errorHandler');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const evaluationRoutes = require('./routes/evaluation');
 
 // Load environment variables
 dotenv.config();
@@ -89,6 +90,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/interviews', interviewRoutes);
+app.use('/api', evaluationRoutes);
 
 // Error handling (must be last!)
 app.use(errorHandler);

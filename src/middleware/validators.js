@@ -61,6 +61,18 @@ exports.validateInterview = [
     .isLength({ min: 5, max: 200 }).withMessage('Questions must be 5-200 characters'),
 ];
 
+exports.validateEvaluation = [
+  body('scores.technical')
+    .isInt({ min: 1, max: 5 }).withMessage('Technical score must be 1-5'),
+  body('scores.communication')
+    .isInt({ min: 1, max: 5 }).withMessage('Communication score must be 1-5'),
+  body('scores.problemSolving')
+    .isInt({ min: 1, max: 5 }).withMessage('Problem solving score must be 1-5'),
+  body('comments')
+    .trim()
+    .isLength({ min: 10 }).withMessage('Comments must be at least 10 characters')
+];
+
 /*
 exports.validateInterviewUpdate = [
   body('title')
