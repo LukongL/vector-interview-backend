@@ -453,3 +453,168 @@
 		100 requests/15 minutes
 		Separate limit for video endpoints
 
+---
+<br><br>
+
+# Task 5: Evaluation & Scoring API
+
+## Features Implemented
+
+### 1. Evaluation Submission
+- **Endpoint**: `POST /api/interviews/{interviewId}/evaluations`
+- **Authentication**: 🔒 Requires valid JWT cookie
+- **Validation**:
+  - Scores: 1-5 for each category
+  - Comments: Minimum 10 characters
+- **Data Storage**:
+  - Scores (technical, communication, problemSolving)
+  - Evaluator ID (auto-assigned)
+  - Interview ID
+  - Timestamp
+
+### 2. Database Schema
+```javascript
+{
+  interview: ObjectId, // Reference to Interview
+  evaluator: ObjectId, // Reference to User
+  scores: {
+    technical: Number, // 1-5
+    communication: Number, // 1-5
+    problemSolving: Number // 1-5
+  },
+  comments: String, // Min 10 chars
+  createdAt: Date // Auto-generated
+}
+```
+
+## API Documentation
+
+### Submit Evaluation
+
+#### Endpoint:
+```http
+POST /api/interviews/{interviewId}/evaluations
+```
+
+#### Request Body:
+```json
+{
+  "scores": {
+    "technical": 4,
+    "communication": 5,
+    "problemSolving": 3
+  },
+  "comments": "Strong technical skills but needs improvement in documentation."
+}
+```
+
+#### Success Response:
+```json
+{
+  "message": "Evaluation submitted successfully",
+  "evaluation": {
+    "_id": "67e41f0609df34817caef235",
+    "scores": {
+      "technical": 4,
+      "communication": 5,
+      "problemSolving": 3
+    },
+    "comments": "Strong technical skills...",
+    "interview": "67d40f0609df34817caef235",
+    "evaluator": "67cf620dfe113dbfb3fb6b5db",
+    "createdAt": "2025-03-15T14:30:45.000Z"
+  }
+}
+```
+
+## Testing Guide
+
+### 1. Prerequisites
+- Valid authentication cookie (`cookies.txt`)
+- Existing interview ID (from `GET /api/interviews`)
+
+### 2. Test Commands
+
+#### Submit evaluation
+```bash
+curl -X POST http://localhost:5000/api/interviews/67d40f0609df34817caef235/evaluations \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "scores": {
+      "technical": 4,
+      "communication": 5,
+      "problemSolving": 3
+    },
+    "comments": "Strong technical skills but needs improvement in documentation."
+  }'
+```
+
+### 3. Expected Results
+
+| Test Case | Expected Outcome |
+|-----------|-----------------|
+| Valid evaluation | `201 Created` with evaluation details |
+| Invalid scores (e.g., 0 or 6) | `400 Bad Request` with validation errors |
+| Missing comments | `400 Bad Request` |
+| Invalid interview ID | `404 Not Found` |
+
+---
+
+## Updated Project Structure
+```
+src/
+├── models/
+│   └── Evaluation.js         # Evaluation schema
+├── controllers/
+│   └── evaluationController.js # Evaluation logic
+├── routes/
+│   ├── interview.js          # Existing interview routes
+│   └── evaluation.js         # New evaluation routes
+└── middleware/
+    └── validators.js         # Added evaluation validation
+```
+
+---
+
+## Changelog (Task 5)
+
+### New Features
+- Evaluation submission endpoint
+- Score validation (1-5 range)
+- Automatic evaluator association
+
+### Improvements
+- Added Swagger documentation
+- Enhanced error handling
+- Dedicated route file for evaluations
+
+---
+
+## Implementation Details
+
+### 1. Evaluation Routes (`src/routes/evaluation.js`)
+```javascript
+const express = require('express');
+const router = express.Router();
+const auth = require('../middleware/auth');
+const { createEvaluation } = require('../controllers/evaluationController');
+const { validateEvaluation } = require('../middleware/validators');
+
+router.post(
+  '/interviews/:interviewId/evaluations',
+  auth,
+  validateEvaluation,
+  createEvaluation
+);
+
+module.exports = router;
+```
+
+### 2. Server Configuration (`src/server.js`)
+```javascript
+// Add to route imports
+const evaluationRoutes = require('./routes/evaluation');
+
+// Add to middleware section
+app.use('/api', evaluationRoutes);
