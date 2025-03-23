@@ -15,6 +15,11 @@ Vector Interview is an asynchronous video interview platform designed to streaml
   - 📝 Create interviews with titles, descriptions, and questions
   - ✅ Input validation with `express-validator`
   - 🛡️ Protected routes with auth middleware
+ 
+- **Media Handling**
+	- 📹 Video Upload & Storage with Cloudinary for storing interview responses
+	- ⚡ Optimized Video Streaming for efficient playback
+	- 🖼️ Profile Image Hosting with automatic resizing and transformation
 
 - **Database Integration**
   - 🗄️ MongoDB Atlas cloud database
